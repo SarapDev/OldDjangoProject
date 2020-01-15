@@ -1,0 +1,40 @@
+{% extends 'blog/base_blog.html' %}
+
+{% block title %}
+    {{ post.title }} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <h1 class="mt-5">
+        {{ post.title }}
+    </h1>
+    <p>
+        {{ post.body }}
+    </p>
+
+    <hr>
+    {% for comment in comment.object_list %}
+    	   {% include 'blog/includes/post_card_templates.html' %}
+    {% endfor %}
+
+    <form action="{% url 'post_detail_url' %}" method="post">
+		{% csrf_token %}
+
+		{% for field in form %}
+			<div class="form-group">
+				{% if field.errors %}
+					<div class="alert alert-danger">
+						{{ field.errors }}
+					</div>
+				{% endif %}
+
+				{{ field.label }}
+				{{ field }}
+			</div>
+		{% endfor %}
+
+		<button type="submit" class="btn btn-success">Add comment's</button>
+
+	</form>
+
+{% endblock %}

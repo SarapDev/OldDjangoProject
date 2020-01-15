@@ -1,0 +1,26 @@
+{% extends 'blog/base_blog.html' %}
+
+{% block title %}
+	Change Post {{ post.title|title }}- {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+	<form class="" action="{{ post.get_change_url }}" method="post">
+		{% csrf_token %}
+		{% for field in form %}
+			<div class="form-group">
+				{% if field.errors %}
+				<div class="alert alert-danger">
+					{{ field.errors }}
+				</div>
+				{% endif %}
+				{{ field.label }}
+				{{ field}}
+			</div>
+		{% endfor %}
+		<button type="submit" class="btn btn-success">Change Post</button>
+		
+	</form>
+
+{% endblock %}
